@@ -26,13 +26,21 @@ class MainWindow(QMainWindow):
         #Connect to the Teensy using a serial port. This will be different for everyone
         #Mac computers will us /dev/tty* 
         #The Arduino Software can tell you what your com port is.
-        self.comport = "COM29"
-        self.ser = serial.Serial(self.comport)
+        self.comport = None
+        self.ser = None
+        
         #We call a function to initialize the user interface. 
         self.init_ui()
 
     # Now define the function that initializes the user interface.
     # all functions within a class need to reference itself.
+    def connect_to_serial(self):
+        if self.comport is None:
+            error_dialog = QtWidgets.QErrorMessage()
+            error_dialog.showMessage('Oh no!')
+        else:
+            self.ser = serial.Serial(self.comport)
+
     def init_ui(self): 
         
         # A simple example of some built in functionality is the status bar.
